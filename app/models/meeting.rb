@@ -5,29 +5,29 @@ end
 
 class Meeting
   attr_accessor :user
-  
+
   def initialize
-    @client = Zoomus.new
-    user_list = @client.user_list
+    @zoom = Zoomus.new
+    user_list = @zoom.user_list
     @host = user_list['users'].first
   end
-  
-  def report(user_id=nil, target_month=nil, meeting_id=nil)
-    user_id ||= '9VovkXLUSWir1wLTz4FhnQ'
-    meeting_id ||= '330-764-596'
-    meeting_id = meeting_id.gsub(/-/, '')
-    get(user_id, meeting_id)
+
+  def report(user_id, target_day=nil, page_number=1)
+    target_day ||= Date.today.prev_month
+    @zoom.report_getuserreport(
+      user_id: user_id,
+      from: target_day.beginning_of_month,
+      to: target_day.end_of_month,
+      page_size: 300,
+      page_number: page_number # TODO: need to count up
+    )
   end
-  
-  def get(user_id, meeting_id)
-    puts @host['id']
-    @client.meeting_get(id: meeting_id, host_id: @host['id'])
-  end
+
 
   def data
     zoom_data['meetings']
   end
-  
+
   private
 
   def zoom_data

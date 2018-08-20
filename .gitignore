@@ -31,3 +31,4 @@
 
 # Original
 .env
+*.swp
