@@ -28,11 +28,15 @@ class Meeting
   end
 
   def target_meetings
-    meetings.select do |meeting|
-      meeting['participants'].select do |user|
-        user['name'] == @user_name
-      end.present?
-    end
+    meetings.select{ |meeting| target_meeting?(meeting) }
+  end
+
+  def target_meeting?(meeting)
+    meeting['participants'].select{|user| target_user?(user) }.present?
+  end
+
+  def target_user?(user)
+    user['name'] == @user_name
   end
 
   def meetings
