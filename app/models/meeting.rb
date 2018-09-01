@@ -4,10 +4,10 @@ Zoomus.configure do |c|
 end
 
 class Meeting
-  def initialize(user_name=nil, target_day = nil)
+  def initialize(user_names=nil, target_day = nil)
     @zoom = Zoomus.new
     @host_id = ENV['ZOOM_HOST']
-    @user_name = user_name || ENV['ZOOM_USERNAME']
+    @user_names = user_names || ENV['ZOOM_USERNAMES'].split(',')
     @target_day = target_day || Date.today.prev_month
   end
 
@@ -16,13 +16,13 @@ class Meeting
   end
 
   def monthly_hour
-    target_minutes.reduce(:+)/3600
+    target_seconds.reduce(:+) / 3600
   end
 
   # private
-  def target_minutes
+  def target_seconds
     target_meetings.map do |meeting|
-      user = meeting['participants'].select{|user| user['name'] == @user_name}.first
+      user = meeting['participants'].select{|user| target_user?(user)}.first
       user['leave_time'].to_datetime.to_f - user['join_time'].to_datetime.to_f
     end
   end
@@ -36,27 +36,45 @@ class Meeting
   end
 
   def target_user?(user)
-    user['name'] == @user_name
+    @user_names.each do |user_name|
+      return true if user['name'].match(user_name)
+    end
+    false
   end
 
   def meetings
-    user_report['meetings']
+    data = []
+    page_number = 1
+    loop do
+      res = user_report(page_number)
+      data += res['meetings']
+
+      if res['page_count'] <= page_number
+        return data
+      else
+        page_number += 1
+      end
+    end
   end
 
-  def user_report(page_number=1)
+  def user_report(page_number=1, refresh = false)
+    file_path = "tmp/zoom_user_report.txt"
+
+    return JSON.parse(File.open(file_path, 'r').read) if !refresh && ENV['OFFLINE_MODE']
+
     res = @zoom.report_getuserreport(
       user_id: @host_id,
       from: @target_day.beginning_of_month,
       to: @target_day.end_of_month,
       page_size: 300,
-      page_number: page_number # TODO: need to count up
+      page_number: page_number
     )
     if res['error']
       puts res['error']['message']
       sleep 10
-      user_report(page_number)
-    else
-      res
+      res = user_report(page_number, refresh)
     end
+    File.open(file_path, 'w') { |file| file.write(res.to_json)} if refresh
+    res
   end
 end
