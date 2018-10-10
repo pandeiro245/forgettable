@@ -223,7 +223,7 @@ DEPENDENCIES
   zoomus
 
 RUBY VERSION
-   ruby 2.2.2p95
+   ruby 2.5.1p57
 
 BUNDLED WITH
-   1.16.2
+   1.16.6
