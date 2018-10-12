@@ -69,3 +69,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Original
 gem 'zoomus'
 gem 'dotenv-rails'
+
+gem 'omniauth'
+gem 'omniauth-oauth2'
+gem 'omniauth-timecrowd', github: 'ruffnote/omniauth-timecrowd'
+gem 'omniauth-misoca', git: 'git@github.com:ruffnote/omniauth-misoca.git'
+
+gem 'rest-client'
