@@ -5,6 +5,11 @@ class TimecrowdApi
       call_api(:get, url, token)
     end
 
+    def report_periods(token)
+      url = '/api/v1/reports/periods'
+      call_api(:get, url, token)
+    end
+
     private
     def base_url
       'https://timecrowd.net'
