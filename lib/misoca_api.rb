@@ -1,13 +1,23 @@
 class MisocaApi
   class << self
     def me(token)
-      url = '/me'
+      url = '/v1/me'
+      call_api(:get, url, token)
+    end
+
+    def contacts(token)
+      url = '/v3/contacts'
+      call_api(:get, url, token)
+    end
+
+    def contact(token, id)
+      url = File.join('/v3/contact', id)
       call_api(:get, url, token)
     end
 
     private
     def base_url
-      'https://app.misoca.jp/api/v1/'
+      'https://app.misoca.jp/api/'
     end
 
     def call_api(method, path, token)
