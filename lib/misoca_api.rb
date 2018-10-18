@@ -15,6 +15,21 @@ class MisocaApi
       call_api(:get, url, token)
     end
 
+    def invoices(token)
+      url = '/v1/invoices'
+      call_api(:get, url, token)
+    end
+
+    def invoice(token, id)
+      url = File.join('/v1/invoice', id)
+      call_api(:get, url, token)
+    end
+
+    def invoice_pdf(token, id)
+      url = File.join('/v1/invoice', id, 'pdf')
+      call_api(:get, url, token)
+    end
+
     private
     def base_url
       'https://app.misoca.jp/api/'
