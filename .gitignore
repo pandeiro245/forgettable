@@ -32,3 +32,4 @@
 # Original
 .env
 *.swp
+config/credentials.yml.enc

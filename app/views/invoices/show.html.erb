@@ -1,0 +1,13 @@
+<h1>Invoice</h1>
+<table border="1">
+  <% @invoice.each do |d| %>
+    <tr>
+      <td><%= d.first %></td>
+      <td><%= d.last %></td>
+    </tr>
+  <% end %>
+</table>
+
+<div>
+  <a href="data:application/pdf;base64,<%= @invoice_pdf['pdf'] %>" target="_blank">PDFはこちら</a>
+</div>

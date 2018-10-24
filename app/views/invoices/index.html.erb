@@ -1,0 +1,15 @@
+<h1>Invoices</h1>
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>請求書番号</th>
+    <th>請求先名</th>
+  </tr>
+  <% @invoices.each do | invoice | %>
+    <tr>
+      <td><%= link_to invoice['id'], invoice_path(invoice['id']) %></td>
+      <td><%= invoice['invoice_number'] %></td>
+      <td><%= invoice['recipient_name'] %></td>
+    </tr>
+  <% end %>
+</table>

@@ -1,0 +1,9 @@
+<h1>Contact</h1>
+<table border="1">
+  <% @contact.each do |d| %>
+    <tr>
+      <td><%= d.first %></td>
+      <td><%= d.last %></td>
+    </tr>
+  <% end %>
+</table>
