@@ -1,0 +1,13 @@
+<h1>Team List</h1>
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+  </tr>
+  <% @teams.each do | team | %>
+    <tr>
+      <td><%= link_to team['id'], report_path(team['id']) %></td>
+      <td><%= team['name'] %></td>
+    </tr>
+  <% end %>
+</table>

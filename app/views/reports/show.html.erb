@@ -1,0 +1,26 @@
+<h1>Report</h1>
+<table border="1">
+  <% @report.each do |d| %>
+    <tr>
+      <td><%= d.first %></td>
+      <td><%= d.last %></td>
+    </tr>
+  <% end %>
+</table>
+
+<table border="1">
+  <tr>
+    <td>Title</td>
+    <td>Hours</td>
+    <td>Minutes</td>
+    <td>Amount</td>
+  </tr>
+  <% @report['categories'].each do |category| %>
+    <tr>
+      <td><%= category['title'] %></td>
+      <td><%= category['total_time_hours'] %></td>
+      <td><%= category['total_time_minutes'] %></td>
+      <td><%= category['total_amount'] %></td>
+    </tr>
+  <% end %>
+</table>
