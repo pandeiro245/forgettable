@@ -1,11 +1,11 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :timecrowd,
-           ENV['TIMECROWD_CLIENT_ID'],
-           ENV['TIMECROWD_CLIENT_SECRET'],
-           client_options: { site: ENV['TIMECROWD_SITE'] }
+           Rails.application.credentials.timecrowd[:client_id],
+           Rails.application.credentials.timecrowd[:client_secret],
+           client_options: { site: Rails.application.credentials.timecrowd[:site] }
   provider :misoca,
-           ENV['MISOCA_CLIENT_ID'],
-           ENV['MISOCA_CLIENT_SECRET'],
+           Rails.application.credentials.misoca[:client_id],
+           Rails.application.credentials.misoca[:client_secret],
            scope: 'write'
 end
 
