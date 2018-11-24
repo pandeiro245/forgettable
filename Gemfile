@@ -69,3 +69,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Original
 gem 'zoomus'
 gem 'dotenv-rails'
+gem 'kintone', github: 'ruffnote/kintone', branch: 'basic-auth'
+gem 'kintone_sync', github: 'mashupwork/kintone_sync'
